@@ -54,6 +54,6 @@ Agentic RAG はツール呼び出し（function calling）を使います。Olla
 |---|---|---|
 | `LLM_PROVIDER` | 使用するプロバイダ (`ollama` or `openai`) | `ollama` |
 | `OLLAMA_BASE_URL` | Ollama の API エンドポイント | `http://localhost:11434/v1` |
-| `OLLAMA_MODEL` | Ollama で使用するモデル名（ツール対応モデル推奨） | `gemma4:e2b-it-qat` |
+| `OLLAMA_MODEL` | Ollama で使用するモデル名（ツール対応モデル推奨） | `qwen3.5:9b` |
 | `OPENAI_API_KEY` | OpenAI の API キー | — |
 | `OPENAI_MODEL` | OpenAI で使用するモデル名 | `gpt-5.1` |
