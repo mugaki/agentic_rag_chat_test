@@ -1,11 +1,12 @@
-import os
 import json
-import streamlit as st
-from openai import OpenAI
+import os
+
 import chromadb
+import streamlit as st
 from chromadb.utils import embedding_functions
-from pypdf import PdfReader
 from dotenv import load_dotenv
+from openai import AzureOpenAI, OpenAI
+from pypdf import PdfReader
 
 load_dotenv()
 
@@ -23,12 +24,20 @@ load_dotenv()
 # ============================================================================
 
 # ===== LLMクライアントの設定 =====
-# .envのLLM_PROVIDERでollamaとopenaiを切り替える
+# .envのLLM_PROVIDERでollama / openai / chatai を切り替える
 provider = os.getenv("LLM_PROVIDER", "ollama")
 
 if provider == "openai":
-    llm_model = os.getenv("OPENAI_MODEL", "gpt-5.1")
+    llm_model = os.getenv("OPENAI_MODEL", "gpt-5.4")
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+elif provider == "chatai":
+    llm_model = os.getenv("CHATAI_MODEL", "gpt-5.1")
+    chatai_base = os.getenv("CHATAI_ENDPOINT").rstrip("/")
+    client = AzureOpenAI(
+        api_key=os.getenv("CHATAI_API_KEY"),
+        azure_endpoint=f"{chatai_base}/{llm_model}",
+        base_url=os.getenv("CHATAI_API_BASE_URL","DUMMY"),
+    )
 else:
     # OllamaはOpenAI互換APIを持つのでOpenAIクライアントがそのまま使える
     # 注意: Agentic RAGはツール呼び出し(function calling)を使うため、
