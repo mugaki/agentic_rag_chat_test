@@ -32,11 +32,11 @@ if provider == "openai":
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 elif provider == "chatai":
     llm_model = os.getenv("CHATAI_MODEL", "gpt-5.1")
-    chatai_base = os.getenv("CHATAI_ENDPOINT").rstrip("/")
+    chatai_base = os.getenv("CHATAI_API_BASE_URL").rstrip("/")
     client = AzureOpenAI(
         api_key=os.getenv("CHATAI_API_KEY"),
         azure_endpoint=f"{chatai_base}/{llm_model}",
-        base_url=os.getenv("CHATAI_API_BASE_URL","DUMMY"),
+        api_version=os.getenv("CHATAI_API_VERSION","DUMMY"),
     )
 else:
     # OllamaはOpenAI互換APIを持つのでOpenAIクライアントがそのまま使える
@@ -58,7 +58,7 @@ chroma_client = chromadb.PersistentClient(path="./chroma_db")
 @st.cache_resource
 def load_embedding_function():
     return embedding_functions.SentenceTransformerEmbeddingFunction(
-        model_name="paraphrase-multilingual-MiniLM-L12-v2"
+        model_name="cl-nagoya/ruri-v3-30m"
     )
 
 
