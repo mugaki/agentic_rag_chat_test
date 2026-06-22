@@ -79,10 +79,10 @@ def load_pdf(file):
 
 
 # ===== テキスト分割 =====
-# chunk_size=200
+# chunk_size=400
 # chunk_overlap=50：前後のチャンクと100文字重複させることで文脈の切れ目をなくす
 def split_text(text):
-    chunk_size = 200
+    chunk_size = 400
     overlap = 50
     chunks = []
     start = 0
